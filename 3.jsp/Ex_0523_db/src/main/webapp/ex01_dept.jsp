@@ -46,7 +46,9 @@
 	dept_list.add(vo);	
 	}
 	
-	
+	rs.close();
+	pstmt.close();
+	conn.close();
 
 %>
 <!DOCTYPE html>
@@ -54,8 +56,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	function send(data){
+		let f = document.m_form;
+		let no = f.deptno;
+		no.value = data;
+		
+		f.action = 'sawon_list.jsp';
+		f.submit();
+	}
+</script>
 </head>
 <body>
+	<form name = "m_form">
 
+	<table border = "1">
+		<caption>부서목록</caption>
+		<tr>
+		<th>부서번호</th>
+		<th>부서명</th>
+		<th>부서위치</th>
+		</tr>
+		<% for(int i = 0; i < dept_list.size(); i++){%>
+		<tr>
+			<td><%= dept_list.get(i).getDeptno() %></td>
+			<td><a href="javascript:send('<%= dept_list.get(i).getDeptno() %>');">
+			<%= dept_list.get(i).getDname() %>
+			</a></td>
+			<td><%= dept_list.get(i).getLoc() %></td>
+		</tr>
+		<%} %>
+	</table>
+	<input type='hidden' name = 'deptno'>
+</form>
 </body>
 </html>
